@@ -1,0 +1,26 @@
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\obj\Debug\Image Galery Demo.csprojAssemblyReference.cache
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\obj\Debug\Image_Galery_Demo.ImageGallery.resources
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\obj\Debug\Image_Galery_Demo.Properties.Resources.resources
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\obj\Debug\Image Galery Demo.csproj.GenerateResource.cache
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\obj\Debug\Image Galery Demo.exe.licenses
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\obj\Debug\Image Galery Demo.csproj.CoreCompileInputs.cache
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\Image Galery Demo.exe.config
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\Image Galery Demo.exe
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\Image Galery Demo.pdb
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.C1Pdf.4.5.2.dll
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.C1Zip.4.5.2.dll
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.Win.4.5.2.dll
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.Win.C1DX.4.5.2.dll
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.Win.C1SplitContainer.4.5.2.dll
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.Win.C1TileControl.4.5.2.dll
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.C1Pdf.4.5.2.xml
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.C1Zip.4.5.2.xml
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.Win.4.5.2.xml
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.Win.C1DX.4.5.2.xml
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.Win.C1SplitContainer.4.5.2.xml
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.Win.C1TileControl.4.5.2.xml
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\obj\Debug\Image Galery Demo.csproj.CopyComplete
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\obj\Debug\Image Galery Demo.exe
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\obj\Debug\Image Galery Demo.pdb
