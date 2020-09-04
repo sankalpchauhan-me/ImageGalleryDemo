@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -28,6 +29,7 @@ namespace Image_Galery_Demo
             {
                 //readText = File.ReadAllText()
                 Console.WriteLine("Error Occured");
+                readText = File.ReadAllText(@"Data/sampleData.json");
             }
 
             return readText;

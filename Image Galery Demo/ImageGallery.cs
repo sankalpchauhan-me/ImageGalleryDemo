@@ -53,20 +53,6 @@ namespace Image_Galery_Demo
         {
             int Desc;
             return InternetGetConnectedState(out Desc, 0);
-
-            //string host = "https://8.8.8.8";
-            //bool result = false;
-            //Ping p = new Ping();
-            //try
-            //{
-            //    PingReply reply = p.Send(host, 3000);
-            //    if (reply.Status == IPStatus.Success)
-            //        return true;
-            //} catch(Exception e)
-            //{
-            //    Console.WriteLine(e.Message);
-            //}
-            //return result;
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -87,6 +73,7 @@ namespace Image_Galery_Demo
         {
             if (IsConnectedToInternet())
             {
+                
                 statusLabel.Visible = false;
                 statusStrip1.Visible = true;
                 imagesList = await datafetch.GetImageData(_searchBox.Text);
@@ -144,8 +131,10 @@ namespace Image_Galery_Demo
         }
         private void OnTileUnchecked(object sender, TileEventArgs e)
         {
-            checkedItems--;
-            _exportImage.Visible = checkedItems > 0;
+            if (checkedItems > 0){
+                checkedItems--;
+                _exportImage.Visible = checkedItems > 0;
+            }
         }
 
         private void OnTileControlPaint(object sender, PaintEventArgs e)
@@ -162,7 +151,12 @@ namespace Image_Galery_Demo
                 if (tile.Checked)
                 {
                     images.Add(tile.Image);
+                    tile.Checked = false;
                 }
+            }
+            if (images.Count <= 0) {
+                MessageBox.Show("No Images Selected", "Alert");
+                return;
             }
             ConvertToPdf(images);
             SaveFileDialog saveFile = new SaveFileDialog();
@@ -171,11 +165,13 @@ namespace Image_Galery_Demo
             if (saveFile.ShowDialog() == DialogResult.OK)
             {
                 imagePdfDocument.Save(saveFile.FileName);
+                
             }
         }
 
         private void ConvertToPdf(List<Image> images)
         {
+            imagePdfDocument.Clear();
             RectangleF rect = imagePdfDocument.PageRectangle;
             bool firstPage = true;
             foreach (var selectedimg in images)
