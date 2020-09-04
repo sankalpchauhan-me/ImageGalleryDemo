@@ -10,23 +10,34 @@ using System.Windows.Forms;
 using System.IO;
 using System.Windows.Forms;
 using C1.Win.C1Tile;
+using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 
 namespace Image_Galery_Demo
 {
 
-
+    /// <summary>
+    /// Image Gallery class of form
+    /// </summary>
     public partial class ImageGallery : Form
     {
         DataFetcher datafetch = new DataFetcher();
         List<ImageItem> imagesList;
         int checkedItems = 0;
 
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
+
+        /// <summary>
+        /// Constructor for the form
+        /// </summary>
         public ImageGallery()
         {
             InitializeComponent();
             this.KeyUp += ImageGalleryEnterPressed;
         }
 
+        // Perform Search if Enter Key is pressed
         private void ImageGalleryEnterPressed(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -35,6 +46,27 @@ namespace Image_Galery_Demo
                     _search_Click(this.pictureBox1, null);
                     break;
             }
+        }
+
+        //Check Internet Connection
+        public bool IsConnectedToInternet()
+        {
+            int Desc;
+            return InternetGetConnectedState(out Desc, 0);
+
+            //string host = "https://8.8.8.8";
+            //bool result = false;
+            //Ping p = new Ping();
+            //try
+            //{
+            //    PingReply reply = p.Send(host, 3000);
+            //    if (reply.Status == IPStatus.Success)
+            //        return true;
+            //} catch(Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //}
+            //return result;
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -53,14 +85,35 @@ namespace Image_Galery_Demo
 
         private async void _search_Click(object sender, EventArgs e)
         {
-            statusStrip1.Visible = true;
-            imagesList = await datafetch.GetImageData(_searchBox.Text);
-            if (imagesList.Count > 0)
+            if (IsConnectedToInternet())
             {
-                group1.Visible = true;
+                statusLabel.Visible = false;
+                statusStrip1.Visible = true;
+                imagesList = await datafetch.GetImageData(_searchBox.Text);
+                if (imagesList.Count > 0)
+                {
+                    group1.Visible = true;
+                }
+                else
+                {
+                    statusLabel.Visible = true;
+                    statusLabel.Text = "No Images Found for this search";
+                }
+                AddTiles(imagesList);
+                statusStrip1.Visible = false;
             }
-            AddTiles(imagesList);
-            statusStrip1.Visible = false;
+            else
+            {
+                var confirmResult = MessageBox.Show("Oops! Unable to connect to Internet. /r/n Would you like to load some sample images", "Confirm", MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    //
+                }
+                else
+                {
+                    //
+                }
+            }
 
         }
 

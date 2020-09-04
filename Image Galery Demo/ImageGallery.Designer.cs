@@ -29,9 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageGallery));
-            C1.Win.C1Tile.PanelElement panelElement1 = new C1.Win.C1Tile.PanelElement();
-            C1.Win.C1Tile.ImageElement imageElement1 = new C1.Win.C1Tile.ImageElement();
-            C1.Win.C1Tile.TextElement textElement1 = new C1.Win.C1Tile.TextElement();
+            C1.Win.C1Tile.PanelElement panelElement2 = new C1.Win.C1Tile.PanelElement();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -39,6 +37,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this._exportImage = new System.Windows.Forms.PictureBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.statusLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this._imageTileControl = new C1.Win.C1Tile.C1TileControl();
@@ -48,7 +48,6 @@
             this.tile3 = new C1.Win.C1Tile.Tile();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.imagePdfDocument = new C1.C1Pdf.C1PdfDocument();
-            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -74,7 +73,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 95);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 84);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -83,7 +82,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(199, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(288, 89);
+            this.panel1.Size = new System.Drawing.Size(288, 78);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -94,7 +93,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this._searchBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this._searchBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this._searchBox.Location = new System.Drawing.Point(16, 9);
+            this._searchBox.Location = new System.Drawing.Point(44, 9);
             this._searchBox.Name = "_searchBox";
             this._searchBox.Size = new System.Drawing.Size(235, 13);
             this._searchBox.TabIndex = 0;
@@ -116,7 +115,7 @@
             // 
             this._exportImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this._exportImage.Image = ((System.Drawing.Image)(resources.GetObject("_exportImage.Image")));
-            this._exportImage.Location = new System.Drawing.Point(20, 57);
+            this._exportImage.Location = new System.Drawing.Point(20, 46);
             this._exportImage.Margin = new System.Windows.Forms.Padding(20, 3, 3, 10);
             this._exportImage.Name = "_exportImage";
             this._exportImage.Size = new System.Drawing.Size(135, 28);
@@ -141,23 +140,48 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.statusLabel);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.statusStrip1);
             this.splitContainer1.Panel2.Controls.Add(this._imageTileControl);
             this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel1);
-            this.splitContainer1.Size = new System.Drawing.Size(784, 741);
-            this.splitContainer1.SplitterDistance = 95;
+            this.splitContainer1.Size = new System.Drawing.Size(784, 661);
+            this.splitContainer1.SplitterDistance = 84;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Cursor = System.Windows.Forms.Cursors.Default;
+            this.statusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.statusLabel.Location = new System.Drawing.Point(0, 2);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(784, 549);
+            this.statusLabel.TabIndex = 4;
+            this.statusLabel.Text = "Enter Search term in Search Box \r\n Press Enter or Click Search Icon to begin";
+            this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(784, 2);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "label1";
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 620);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 551);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip1.Visible = false;
             this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
             // 
             // toolStripProgressBar1
@@ -176,17 +200,16 @@
             // 
             // 
             // 
-            panelElement1.Alignment = System.Drawing.ContentAlignment.BottomLeft;
-            panelElement1.Children.Add(imageElement1);
-            panelElement1.Children.Add(textElement1);
-            panelElement1.Margin = new System.Windows.Forms.Padding(10, 6, 10, 6);
-            this._imageTileControl.DefaultTemplate.Elements.Add(panelElement1);
+            panelElement2.Alignment = System.Drawing.ContentAlignment.BottomLeft;
+            panelElement2.Margin = new System.Windows.Forms.Padding(10, 6, 10, 6);
+            this._imageTileControl.DefaultTemplate.Elements.Add(panelElement2);
             this._imageTileControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this._imageTileControl.Groups.Add(this.group1);
             this._imageTileControl.Location = new System.Drawing.Point(0, 0);
             this._imageTileControl.Name = "_imageTileControl";
             this._imageTileControl.Orientation = C1.Win.C1Tile.LayoutOrientation.Vertical;
-            this._imageTileControl.Size = new System.Drawing.Size(764, 718);
+            this._imageTileControl.Padding = new System.Windows.Forms.Padding(0);
+            this._imageTileControl.Size = new System.Drawing.Size(784, 573);
             this._imageTileControl.SurfacePadding = new System.Windows.Forms.Padding(12, 4, 12, 4);
             this._imageTileControl.SwipeDistance = 20;
             this._imageTileControl.SwipeRearrangeDistance = 98;
@@ -242,22 +265,12 @@
             this.imagePdfDocument.UseFastTextOut = true;
             this.imagePdfDocument.UseFontShaping = true;
             // 
-            // label1
-            // 
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(784, 2);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "label1";
-            // 
             // ImageGallery
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(784, 741);
+            this.ClientSize = new System.Drawing.Size(784, 661);
             this.Controls.Add(this.splitContainer1);
             this.KeyPreview = true;
             this.MaximizeBox = false;
@@ -301,6 +314,7 @@
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label statusLabel;
     }
 }
 
