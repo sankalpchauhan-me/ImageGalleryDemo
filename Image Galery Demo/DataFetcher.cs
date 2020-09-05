@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 
 namespace Image_Galery_Demo
@@ -12,7 +13,7 @@ namespace Image_Galery_Demo
     class DataFetcher
     {
 
-        async Task<string> GetDataFromService(string searchstring)
+        async Task<string> GetDataFromService(string searchstring, IStatus iStatus)
         {
             string readText = null;
             try
@@ -30,15 +31,27 @@ namespace Image_Galery_Demo
                 //readText = File.ReadAllText()
                 Console.WriteLine("Error Occured");
                 readText = File.ReadAllText(@"Data/sampleData.json");
+                iStatus.Status(false);
+                
             }
 
             return readText;
         }
 
-        public async Task<List<ImageItem>> GetImageData(string search)
+        public async Task<List<ImageItem>> GetImageData(string search, IStatus iStatus)
         {
-            string data = await GetDataFromService(search);
+            string data = await GetDataFromService(search, iStatus);
             return JsonConvert.DeserializeObject<List<ImageItem>>(data);
+        }
+
+        public List<ImageItem> GetSampleData()
+        {
+            string data = File.ReadAllText(@"Data/sampleData.json");
+            return JsonConvert.DeserializeObject<List<ImageItem>>(data);
+        }
+
+        public interface IStatus{
+            void Status(bool b);
         }
 
     }

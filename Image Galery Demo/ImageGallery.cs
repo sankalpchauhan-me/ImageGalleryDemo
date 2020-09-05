@@ -19,7 +19,7 @@ namespace Image_Galery_Demo
     /// <summary>
     /// Image Gallery class of form
     /// </summary>
-    public partial class ImageGallery : Form
+    public partial class ImageGallery : Form, DataFetcher.IStatus
     {
         DataFetcher datafetch = new DataFetcher();
         List<ImageItem> imagesList;
@@ -71,15 +71,21 @@ namespace Image_Galery_Demo
 
         private async void _search_Click(object sender, EventArgs e)
         {
-            if (IsConnectedToInternet())
-            {
-                
+            
                 statusLabel.Visible = false;
                 statusStrip1.Visible = true;
-                imagesList = await datafetch.GetImageData(_searchBox.Text);
+                if (IsConnectedToInternet()){
+                    imagesList = await datafetch.GetImageData(_searchBox.Text, this);
+                }
+                else{
+                    imagesList = datafetch.GetSampleData();
+                    MessageBox.Show("Oops! Unable to connect to Internet Please Check Your Connection. Meanwhile Enjoy some sample images", "Okay");
+                }
                 if (imagesList.Count > 0)
                 {
                     group1.Visible = true;
+                    checkedItems = 0;
+                    _exportImage.Visible = false;
                 }
                 else
                 {
@@ -88,19 +94,7 @@ namespace Image_Galery_Demo
                 }
                 AddTiles(imagesList);
                 statusStrip1.Visible = false;
-            }
-            else
-            {
-                var confirmResult = MessageBox.Show("Oops! Unable to connect to Internet. /r/n Would you like to load some sample images", "Confirm", MessageBoxButtons.YesNo);
-                if (confirmResult == DialogResult.Yes)
-                {
-                    //
-                }
-                else
-                {
-                    //
-                }
-            }
+            
 
         }
 
@@ -131,10 +125,9 @@ namespace Image_Galery_Demo
         }
         private void OnTileUnchecked(object sender, TileEventArgs e)
         {
-            if (checkedItems > 0){
-                checkedItems--;
-                _exportImage.Visible = checkedItems > 0;
-            }
+            Console.WriteLine(checkedItems);
+            checkedItems--;
+            _exportImage.Visible = checkedItems > 0;
         }
 
         private void OnTileControlPaint(object sender, PaintEventArgs e)
@@ -151,7 +144,6 @@ namespace Image_Galery_Demo
                 if (tile.Checked)
                 {
                     images.Add(tile.Image);
-                    tile.Checked = false;
                 }
             }
             if (images.Count <= 0) {
@@ -164,14 +156,20 @@ namespace Image_Galery_Demo
             saveFile.Filter = "PDF files (*.pdf)|*.pdf*";
             if (saveFile.ShowDialog() == DialogResult.OK)
             {
-                imagePdfDocument.Save(saveFile.FileName);
+                try
+                {
+                    imagePdfDocument.Save(saveFile.FileName);
+                }catch (Exception e1)
+                {
+                    MessageBox.Show(e1.Message, "Error");
+                }
                 
             }
         }
 
         private void ConvertToPdf(List<Image> images)
         {
-            imagePdfDocument.Clear();
+            imagePdfDocument?.Clear();
             RectangleF rect = imagePdfDocument.PageRectangle;
             bool firstPage = true;
             foreach (var selectedimg in images)
@@ -182,7 +180,12 @@ namespace Image_Galery_Demo
                 }
                 firstPage = false;
                 rect.Inflate(-72, -72);
-                imagePdfDocument.DrawImage(selectedimg, rect);
+                try
+                {
+                    imagePdfDocument.DrawImage(selectedimg, rect);
+                }catch (Exception e){
+                    MessageBox.Show(e.Message, "Error");
+                }
             }
         }
 
@@ -207,9 +210,17 @@ namespace Image_Galery_Demo
         private async void button1_Click(object sender, EventArgs e)
         {
             statusStrip1.Visible = true;
-            imagesList = await datafetch.GetImageData(_searchBox.Text);
+            imagesList = await datafetch.GetImageData(_searchBox.Text, this);
             AddTiles(imagesList);
             statusStrip1.Visible = false;
+        }
+
+        // Some Exception Occured Inform User
+        public void Status(bool b)
+        {
+            if (!b){
+                MessageBox.Show("OOPS! Something Went Wrong, Meanwhile enjoy these sample images.");
+            }
         }
     }
 }

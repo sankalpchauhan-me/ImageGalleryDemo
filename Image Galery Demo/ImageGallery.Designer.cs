@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageGallery));
-            C1.Win.C1Tile.PanelElement panelElement2 = new C1.Win.C1Tile.PanelElement();
+            C1.Win.C1Tile.PanelElement panelElement1 = new C1.Win.C1Tile.PanelElement();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -122,6 +122,7 @@
             this._exportImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this._exportImage.TabIndex = 2;
             this._exportImage.TabStop = false;
+            this._exportImage.Visible = false;
             this._exportImage.Click += new System.EventHandler(this.OnExportClick);
             this._exportImage.Paint += new System.Windows.Forms.PaintEventHandler(this._exportImage_Paint);
             // 
@@ -157,7 +158,7 @@
             this.statusLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.statusLabel.Location = new System.Drawing.Point(0, 2);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(784, 549);
+            this.statusLabel.Size = new System.Drawing.Size(784, 571);
             this.statusLabel.TabIndex = 4;
             this.statusLabel.Text = "Enter Search term in Search Box \r\n Press Enter or Click Search Icon to begin";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -200,9 +201,9 @@
             // 
             // 
             // 
-            panelElement2.Alignment = System.Drawing.ContentAlignment.BottomLeft;
-            panelElement2.Margin = new System.Windows.Forms.Padding(10, 6, 10, 6);
-            this._imageTileControl.DefaultTemplate.Elements.Add(panelElement2);
+            panelElement1.Alignment = System.Drawing.ContentAlignment.BottomLeft;
+            panelElement1.Margin = new System.Windows.Forms.Padding(10, 6, 10, 6);
+            this._imageTileControl.DefaultTemplate.Elements.Add(panelElement1);
             this._imageTileControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this._imageTileControl.Groups.Add(this.group1);
             this._imageTileControl.Location = new System.Drawing.Point(0, 0);
@@ -215,6 +216,8 @@
             this._imageTileControl.SwipeRearrangeDistance = 98;
             this._imageTileControl.TabIndex = 1;
             this._imageTileControl.TextSize = 0F;
+            this._imageTileControl.TileChecked += new System.EventHandler<C1.Win.C1Tile.TileEventArgs>(this.OnTileChecked);
+            this._imageTileControl.TileUnchecked += new System.EventHandler<C1.Win.C1Tile.TileEventArgs>(this.OnTileUnchecked);
             // 
             // group1
             // 
