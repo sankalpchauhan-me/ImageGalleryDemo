@@ -12,6 +12,8 @@ using System.Windows.Forms;
 using C1.Win.C1Tile;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
+using C1.C1Pdf;
+using C1.Framework;
 
 namespace Image_Galery_Demo
 {
@@ -21,6 +23,9 @@ namespace Image_Galery_Demo
     /// </summary>
     public partial class ImageGallery : Form, DataFetcher.IStatus
     {
+        //UI
+        private TextBox searchBox;
+
         DataFetcher datafetch = new DataFetcher();
         List<ImageItem> imagesList;
         int checkedItems = 0;
@@ -34,7 +39,34 @@ namespace Image_Galery_Demo
         public ImageGallery()
         {
             InitializeComponent();
+            InitUi();
             this.KeyUp += ImageGalleryEnterPressed;
+        }
+
+        public void InitUi()
+        {
+            //init Search EditText
+            searchBox = new TextBox();
+            searchBox.Anchor = (((AnchorStyles.Top | AnchorStyles.Bottom)
+            | AnchorStyles.Left)
+            | AnchorStyles.Right);
+            searchBox.BorderStyle = BorderStyle.None;
+            searchBox.Cursor = Cursors.IBeam;
+            searchBox.Location = new Point(44, 9);
+            searchBox.Name = "searchBox";
+            searchBox.Size = new Size(235, 13);
+            searchBox.TabIndex = 0;
+            searchBox.Text = "Search Image";
+            searchBox.TextChanged += new EventHandler(textBox1_TextChanged);
+            panel1.Controls.Add(searchBox);
+            //init Search Picture box
+
+            //init init Border
+
+            //init C1Tile
+
+            //init Status Bar
+
         }
 
         // Perform Search if Enter Key is pressed
@@ -57,7 +89,7 @@ namespace Image_Galery_Demo
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            Rectangle r = _searchBox.Bounds;
+            Rectangle r = searchBox.Bounds;
             r.Inflate(3, 3);
             Pen p = new Pen(Color.LightGray);
             e.Graphics.DrawRectangle(p, r);
@@ -75,17 +107,17 @@ namespace Image_Galery_Demo
                 statusLabel.Visible = false;
                 statusStrip1.Visible = true;
                 if (IsConnectedToInternet()){
-                    imagesList = await datafetch.GetImageData(_searchBox.Text, this);
+                    imagesList = await datafetch.GetImageData(searchBox.Text, this);
                 }
                 else{
                     imagesList = datafetch.GetSampleData();
-                    MessageBox.Show("Oops! Unable to connect to Internet Please Check Your Connection. Meanwhile Enjoy some sample images", "Okay");
+                    MessageBox.Show("Oops! Unable to connect to Internet Please Check Your Connection. \r\n Meanwhile Enjoy some sample images", "Okay");
                 }
                 if (imagesList.Count > 0)
                 {
                     group1.Visible = true;
                     checkedItems = 0;
-                    _exportImage.Visible = false;
+                    exportImage.Visible = false;
                 }
                 else
                 {
@@ -100,17 +132,17 @@ namespace Image_Galery_Demo
 
         private void AddTiles(List<ImageItem> imageList)
         {
-            _imageTileControl.Groups[0].Tiles.Clear();
+            imageTileControl.Groups[0].Tiles.Clear();
             Console.WriteLine(imagesList.Count);
             foreach (var imageitem in imageList)
             {
                 Tile tile = new Tile();
                 tile.HorizontalSize = 2;
                 tile.VerticalSize = 2;
-                _imageTileControl.Groups[0].Tiles.Add(tile);
+                imageTileControl.Groups[0].Tiles.Add(tile);
                 Image img = Image.FromStream(new MemoryStream(imageitem.Base64));
                 Template tl = new Template();
-                ImageElement ie = new ImageElement();
+                C1.Win.C1Tile.ImageElement ie = new C1.Win.C1Tile.ImageElement();
                 ie.ImageLayout = ForeImageLayout.Stretch;
                 tl.Elements.Add(ie);
                 tile.Template = tl;
@@ -121,13 +153,13 @@ namespace Image_Galery_Demo
         private void OnTileChecked(object sender, TileEventArgs e)
         {
             checkedItems++;
-            _exportImage.Visible = true;
+            exportImage.Visible = true;
         }
         private void OnTileUnchecked(object sender, TileEventArgs e)
         {
             Console.WriteLine(checkedItems);
             checkedItems--;
-            _exportImage.Visible = checkedItems > 0;
+            exportImage.Visible = checkedItems > 0;
         }
 
         private void OnTileControlPaint(object sender, PaintEventArgs e)
@@ -138,8 +170,9 @@ namespace Image_Galery_Demo
 
         private void OnExportClick(object sender, EventArgs e)
         {
+            C1PdfDocument imageToPdf = new C1PdfDocument();
             List<Image> images = new List<Image>();
-            foreach (Tile tile in _imageTileControl.Groups[0].Tiles)
+            foreach (Tile tile in imageTileControl.Groups[0].Tiles)
             {
                 if (tile.Checked)
                 {
@@ -150,7 +183,6 @@ namespace Image_Galery_Demo
                 MessageBox.Show("No Images Selected", "Alert");
                 return;
             }
-            ConvertToPdf(images);
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.DefaultExt = "pdf";
             saveFile.Filter = "PDF files (*.pdf)|*.pdf*";
@@ -158,31 +190,38 @@ namespace Image_Galery_Demo
             {
                 try
                 {
-                    imagePdfDocument.Save(saveFile.FileName);
-                }catch (Exception e1)
+                    ConvertToPdf(images, imageToPdf);
+                    Console.WriteLine(saveFile.FileName);
+                    imageToPdf.Save(saveFile.FileName);
+                }
+                catch (Exception e1)
                 {
+                    Console.WriteLine(e1.StackTrace);
                     MessageBox.Show(e1.Message, "Error");
                 }
-                
+
+            }
+            else{
+                Console.WriteLine("Test");
             }
         }
 
-        private void ConvertToPdf(List<Image> images)
+        private void ConvertToPdf(List<Image> images, C1PdfDocument imageToPdf)
         {
-            imagePdfDocument?.Clear();
-            RectangleF rect = imagePdfDocument.PageRectangle;
+            
+            RectangleF rect = imageToPdf.PageRectangle;
             bool firstPage = true;
             foreach (var selectedimg in images)
             {
                 if (!firstPage)
                 {
-                    imagePdfDocument.NewPage();
+                    imageToPdf.NewPage();
                 }
                 firstPage = false;
                 rect.Inflate(-72, -72);
                 try
                 {
-                    imagePdfDocument.DrawImage(selectedimg, rect);
+                    imageToPdf.DrawImage(selectedimg, rect);
                 }catch (Exception e){
                     MessageBox.Show(e.Message, "Error");
                 }
@@ -191,7 +230,7 @@ namespace Image_Galery_Demo
 
         private void _exportImage_Paint(object sender, PaintEventArgs e)
         {
-            Rectangle r = new Rectangle(_exportImage.Location.X, _exportImage.Location.Y, _exportImage.Width, _exportImage.Height);
+            Rectangle r = new Rectangle(exportImage.Location.X, exportImage.Location.Y, exportImage.Width, exportImage.Height);
             r.X -= 29;
             r.Y -= 3;
             r.Width--;
@@ -210,16 +249,16 @@ namespace Image_Galery_Demo
         private async void button1_Click(object sender, EventArgs e)
         {
             statusStrip1.Visible = true;
-            imagesList = await datafetch.GetImageData(_searchBox.Text, this);
+            imagesList = await datafetch.GetImageData(searchBox.Text, this);
             AddTiles(imagesList);
             statusStrip1.Visible = false;
         }
 
-        // Some Exception Occured Inform User
-        public void Status(bool b)
+        // Inform USer of Exception
+        public void Status(bool b, String s)
         {
             if (!b){
-                MessageBox.Show("OOPS! Something Went Wrong, Meanwhile enjoy these sample images.");
+                MessageBox.Show("Error: "+s+"\r\nMeanwhile look at these sample images.");
             }
         }
     }

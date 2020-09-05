@@ -24,14 +24,15 @@ namespace Image_Galery_Demo
                 using (HttpClient c = new HttpClient())
                 {
                     readText = await c.GetStringAsync(url);
+                    Console.WriteLine(readText);
                 }
             }
-            catch
+            catch (Exception e1)
             {
                 //readText = File.ReadAllText()
-                Console.WriteLine("Error Occured");
+                Console.WriteLine(e1.Message);
                 readText = File.ReadAllText(@"Data/sampleData.json");
-                iStatus.Status(false);
+                iStatus.Status(false, e1.Message);
                 
             }
 
@@ -51,7 +52,7 @@ namespace Image_Galery_Demo
         }
 
         public interface IStatus{
-            void Status(bool b);
+            void Status(bool b, String s);
         }
 
     }
