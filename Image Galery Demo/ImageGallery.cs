@@ -25,7 +25,18 @@ namespace Image_Galery_Demo
     {
         //UI
         private TextBox searchBox;
+        private PictureBox exportImage;
+        private TableLayoutPanel tableLayoutPanel;
+        private PictureBox searchImagePictureBox;
+        private Label label1;
+        private Label statusLabel;
+        private C1TileControl imageTileControl;
+        private StatusStrip statusStrip;
+        private ToolStripProgressBar toolStripProgressBar1;
+        private Group group1;
+        private SplitContainer mainSplitContainer;
 
+        //Data
         DataFetcher datafetch = new DataFetcher();
         List<ImageItem> imagesList;
         int checkedItems = 0;
@@ -45,27 +56,60 @@ namespace Image_Galery_Demo
 
         public void InitUi()
         {
-            //init Search EditText
-            searchBox = new TextBox();
-            searchBox.Anchor = (((AnchorStyles.Top | AnchorStyles.Bottom)
-            | AnchorStyles.Left)
-            | AnchorStyles.Right);
-            searchBox.BorderStyle = BorderStyle.None;
-            searchBox.Cursor = Cursors.IBeam;
-            searchBox.Location = new Point(44, 9);
-            searchBox.Name = "searchBox";
-            searchBox.Size = new Size(235, 13);
-            searchBox.TabIndex = 0;
-            searchBox.Text = "Search Image";
-            searchBox.TextChanged += new EventHandler(textBox1_TextChanged);
-            panel1.Controls.Add(searchBox);
-            //init Search Picture box
+            //Split Container
+            mainSplitContainer = AppView.getSplitContainer();
+            Controls.Add(mainSplitContainer); Controls.Add(mainSplitContainer);
 
-            //init init Border
+            //init Search EditText
+            searchBox = AppView.getSearchBox();
+            searchBox.TextChanged += new EventHandler(OnTextChanged);
+            panel1.Controls.Add(searchBox);
+
+            //init Search Picture box
+            searchImagePictureBox = AppView.getSearchImagePictureBox();
+            searchImagePictureBox.Click += new EventHandler(this.OnSearchClicked);
+
+            // Table LayoutPanel
+            tableLayoutPanel = AppView.getTableLayoutPanel();
+            tableLayoutPanel.Controls.Add(panel1, 1, 0);
+            tableLayoutPanel.Controls.Add(searchImagePictureBox, 2, 0);
+            mainSplitContainer.Panel1.Controls.Add(tableLayoutPanel);
+
+            //init Export PDF Btn
+            exportImage = AppView.getExportPDFButton();
+            exportImage.Click += new EventHandler(this.OnExportClick);
+            exportImage.Paint += new PaintEventHandler(this.ExportImagePaint);
+            tableLayoutPanel.Controls.Add(this.exportImage, 0, 0);
+
+            // init Border
+            label1 = AppView.getBorder();
+            mainSplitContainer.Panel2.Controls.Add(label1);
+
+            //init status label
+            statusLabel = AppView.getStausLabel();
+            mainSplitContainer.Panel2.Controls.Add(statusLabel);
+
+            //Groups
+            group1 = new Group();
+            group1.Name = "group1";
+            group1.Visible = false;
 
             //init C1Tile
+            imageTileControl = AppView.getTileCntrol();
+            imageTileControl.Groups.Add(group1);
+            imageTileControl.TileChecked += new EventHandler<TileEventArgs>(OnTileChecked);
+            imageTileControl.TileUnchecked += new EventHandler<TileEventArgs>(OnTileUnchecked);
+            mainSplitContainer.Panel2.Controls.Add(this.imageTileControl);
+
+            //ProgressBar
+            toolStripProgressBar1 = AppView.getProgressBarTool();
 
             //init Status Bar
+            statusStrip = AppView.getStatusStrip();
+            statusStrip.Items.AddRange(new ToolStripItem[] {
+            toolStripProgressBar1});
+            mainSplitContainer.Panel2.Controls.Add(statusStrip);
+
 
         }
 
@@ -75,7 +119,7 @@ namespace Image_Galery_Demo
             switch (e.KeyCode)
             {
                 case Keys.Enter:
-                    _search_Click(this.pictureBox1, null);
+                    OnSearchClicked(searchImagePictureBox, null);
                     break;
             }
         }
@@ -96,38 +140,37 @@ namespace Image_Galery_Demo
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void OnTextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private async void _search_Click(object sender, EventArgs e)
+        private async void OnSearchClicked(object sender, EventArgs e)
         {
-            
-                statusLabel.Visible = false;
-                statusStrip1.Visible = true;
-                if (IsConnectedToInternet()){
-                    imagesList = await datafetch.GetImageData(searchBox.Text, this);
-                }
-                else{
-                    imagesList = datafetch.GetSampleData();
-                    MessageBox.Show("Oops! Unable to connect to Internet Please Check Your Connection. \r\n Meanwhile Enjoy some sample images", "Okay");
-                }
-                if (imagesList.Count > 0)
-                {
-                    group1.Visible = true;
-                    checkedItems = 0;
-                    exportImage.Visible = false;
-                }
-                else
-                {
-                    statusLabel.Visible = true;
-                    statusLabel.Text = "No Images Found for this search";
-                }
-                AddTiles(imagesList);
-                statusStrip1.Visible = false;
-            
-
+            statusLabel.Visible = false;
+            statusStrip.Visible = true;
+            if (IsConnectedToInternet())
+            {
+                imagesList = await datafetch.GetImageData(searchBox.Text, this);
+            }
+            else
+            {
+                imagesList = datafetch.GetSampleData();
+                MessageBox.Show(Properties.Resources.no_internet, Properties.Resources.dialog_okay);
+            }
+            if (imagesList.Count > 0)
+            {
+                group1.Visible = true;
+                checkedItems = 0;
+                exportImage.Visible = false;
+            }
+            else
+            {
+                statusLabel.Visible = true;
+                statusLabel.Text = Properties.Resources.no_images_found;
+            }
+            AddTiles(imagesList);
+            statusStrip.Visible = false;
         }
 
         private void AddTiles(List<ImageItem> imageList)
@@ -179,8 +222,9 @@ namespace Image_Galery_Demo
                     images.Add(tile.Image);
                 }
             }
-            if (images.Count <= 0) {
-                MessageBox.Show("No Images Selected", "Alert");
+            if (images.Count <= 0)
+            {
+                MessageBox.Show(Properties.Resources.no_images_selected, Properties.Resources.dialog_alert);
                 return;
             }
             SaveFileDialog saveFile = new SaveFileDialog();
@@ -193,22 +237,22 @@ namespace Image_Galery_Demo
                     ConvertToPdf(images, imageToPdf);
                     Console.WriteLine(saveFile.FileName);
                     imageToPdf.Save(saveFile.FileName);
+                    MessageBox.Show(saveFile.FileName + " " + Properties.Resources.saved_successfully, Properties.Resources.dialog_success);
                 }
                 catch (Exception e1)
                 {
                     Console.WriteLine(e1.StackTrace);
-                    MessageBox.Show(e1.Message, "Error");
+                    MessageBox.Show(e1.Message, Properties.Resources.dialog_error);
                 }
-
             }
-            else{
-                Console.WriteLine("Test");
+            else
+            {
+                Console.WriteLine("Operation Cancelled");
             }
         }
 
         private void ConvertToPdf(List<Image> images, C1PdfDocument imageToPdf)
         {
-            
             RectangleF rect = imageToPdf.PageRectangle;
             bool firstPage = true;
             foreach (var selectedimg in images)
@@ -222,13 +266,15 @@ namespace Image_Galery_Demo
                 try
                 {
                     imageToPdf.DrawImage(selectedimg, rect);
-                }catch (Exception e){
-                    MessageBox.Show(e.Message, "Error");
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, Properties.Resources.dialog_error);
                 }
             }
         }
 
-        private void _exportImage_Paint(object sender, PaintEventArgs e)
+        private void ExportImagePaint(object sender, PaintEventArgs e)
         {
             Rectangle r = new Rectangle(exportImage.Location.X, exportImage.Location.Y, exportImage.Width, exportImage.Height);
             r.X -= 29;
@@ -241,24 +287,12 @@ namespace Image_Galery_Demo
 
         }
 
-        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private async void button1_Click(object sender, EventArgs e)
-        {
-            statusStrip1.Visible = true;
-            imagesList = await datafetch.GetImageData(searchBox.Text, this);
-            AddTiles(imagesList);
-            statusStrip1.Visible = false;
-        }
-
-        // Inform USer of Exception
+        // Inform User of Exception
         public void Status(bool b, String s)
         {
-            if (!b){
-                MessageBox.Show("Error: "+s+"\r\nMeanwhile look at these sample images.");
+            if (!b)
+            {
+                MessageBox.Show(Properties.Resources.dialog_error + ": " + s + "\r\n" + Properties.Resources.sample_text);
             }
         }
     }

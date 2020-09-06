@@ -12,6 +12,10 @@ namespace Image_Galery_Demo
 {
     class DataFetcher
     {
+        public interface IStatus
+        {
+            void Status(bool b, String s);
+        }
 
         async Task<string> GetDataFromService(string searchstring, IStatus iStatus)
         {
@@ -32,8 +36,8 @@ namespace Image_Galery_Demo
                 //readText = File.ReadAllText()
                 Console.WriteLine(e1.Message);
                 readText = File.ReadAllText(@"Data/sampleData.json");
+                //Pass the message to view, so that it can be displayed to user
                 iStatus.Status(false, e1.Message);
-                
             }
 
             return readText;
@@ -51,9 +55,6 @@ namespace Image_Galery_Demo
             return JsonConvert.DeserializeObject<List<ImageItem>>(data);
         }
 
-        public interface IStatus{
-            void Status(bool b, String s);
-        }
 
     }
 }

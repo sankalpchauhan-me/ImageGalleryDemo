@@ -24,3 +24,7 @@ C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\De
 C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\obj\Debug\Image Galery Demo.csproj.CopyComplete
 C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\obj\Debug\Image Galery Demo.exe
 C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\obj\Debug\Image Galery Demo.pdb
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.C1Excel.4.5.2.dll
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.Win.Bitmap.4.5.2.dll
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.C1Excel.4.5.2.xml
+C:\Users\Sankalp Chauhan\source\repos\Image Galery Demo\Image Galery Demo\bin\Debug\C1.Win.Bitmap.4.5.2.xml
