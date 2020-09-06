@@ -22,9 +22,9 @@
 - The project will open in Visual Studio
 
 ## Screenshots
-![Home](assets/Screenshot1.png)[assets/Screenshot1.png]
+![Home](assets/Screenshot1.png)[https://github.com/sankalpchauhan-me/ImageGalleryDemo/assets/Screenshot1.png]
 
-![Home](assets/Screenshot2.png)[assets/Screenshot2.png]
+![Home](assets/Screenshot2.png)[https://github.com/sankalpchauhan-me/ImageGalleryDemo/assets/Screenshot2.png]
 
 ## Some Sample PDF's generated via app
 [Sample Test.pdf](assets/SampleTest.pdf)
