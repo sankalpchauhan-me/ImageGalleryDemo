@@ -113,7 +113,7 @@ namespace Image_Galery_Demo
             mainSplitContainer.Panel2.Controls.Add(statusStrip);
         }
 
-        // Perform Search if Enter Key is pressed
+        // Perform Search if "S" Key is pressed
         private void ImageGalleryEnterPressed(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
