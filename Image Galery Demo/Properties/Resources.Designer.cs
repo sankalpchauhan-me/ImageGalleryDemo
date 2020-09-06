@@ -164,7 +164,7 @@ namespace Image_Galery_Demo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Saved Successfully.
+        ///   Looks up a localized string similar to Saved Successfully. Would you like to open the document?.
         /// </summary>
         internal static string saved_successfully {
             get {

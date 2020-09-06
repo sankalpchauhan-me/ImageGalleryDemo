@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Windows.Forms;
 using C1.Win.C1Tile;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
@@ -35,6 +34,7 @@ namespace Image_Galery_Demo
         private ToolStripProgressBar toolStripProgressBar1;
         private Group group1;
         private SplitContainer mainSplitContainer;
+        private Panel panel1;
 
         //Data
         DataFetcher datafetch = new DataFetcher();
@@ -57,54 +57,57 @@ namespace Image_Galery_Demo
         // Initializes the UI from the base components in AppView class
         public void InitUi()
         {
+            //Panel
+            panel1 = AppView.GetPanel();
+            panel1.Paint += new PaintEventHandler(PanelPaint);
             //Split Container
-            mainSplitContainer = AppView.getSplitContainer();
+            mainSplitContainer = AppView.GetSplitContainer();
             Controls.Add(mainSplitContainer); Controls.Add(mainSplitContainer);
 
             //init Search EditText
-            searchBox = AppView.getSearchBox();
+            searchBox = AppView.GetSearchBox();
             searchBox.TextChanged += new EventHandler(OnTextChanged);
             panel1.Controls.Add(searchBox);
 
             //init Search Picture box
-            searchImagePictureBox = AppView.getSearchImagePictureBox();
+            searchImagePictureBox = AppView.GetSearchImagePictureBox();
             searchImagePictureBox.Click += new EventHandler(this.OnSearchClicked);
 
             // Table LayoutPanel
-            tableLayoutPanel = AppView.getTableLayoutPanel();
+            tableLayoutPanel = AppView.GetTableLayoutPanel();
             tableLayoutPanel.Controls.Add(panel1, 1, 0);
             tableLayoutPanel.Controls.Add(searchImagePictureBox, 2, 0);
             mainSplitContainer.Panel1.Controls.Add(tableLayoutPanel);
 
             //init Export PDF Btn
-            exportImage = AppView.getExportPDFButton();
+            exportImage = AppView.GetExportPDFButton();
             exportImage.Click += new EventHandler(this.OnExportClick);
             exportImage.Paint += new PaintEventHandler(this.ExportImagePaint);
             tableLayoutPanel.Controls.Add(this.exportImage, 0, 0);
 
             // init Border
-            label1 = AppView.getBorder();
+            label1 = AppView.GetBorder();
             mainSplitContainer.Panel2.Controls.Add(label1);
 
             //init status label
-            statusLabel = AppView.getStausLabel();
+            statusLabel = AppView.GetStausLabel();
             mainSplitContainer.Panel2.Controls.Add(statusLabel);
 
             //Groups
-            group1 = AppView.getGroup();
+            group1 = AppView.GetGroup();
 
             //init C1Tile
-            imageTileControl = AppView.getTileCntrol();
+            imageTileControl = AppView.GetTileCntrol();
             imageTileControl.Groups.Add(group1);
             imageTileControl.TileChecked += new EventHandler<TileEventArgs>(OnTileChecked);
             imageTileControl.TileUnchecked += new EventHandler<TileEventArgs>(OnTileUnchecked);
             mainSplitContainer.Panel2.Controls.Add(this.imageTileControl);
 
             //ProgressBar
-            toolStripProgressBar1 = AppView.getProgressBarTool();
+            toolStripProgressBar1 = AppView.GetProgressBarTool();
 
             //init Status Bar
-            statusStrip = AppView.getStatusStrip();
+            statusStrip = AppView.GetStatusStrip();
             statusStrip.Items.AddRange(new ToolStripItem[] {
             toolStripProgressBar1});
             mainSplitContainer.Panel2.Controls.Add(statusStrip);
@@ -126,6 +129,15 @@ namespace Image_Galery_Demo
         {
             int Desc;
             return InternetGetConnectedState(out Desc, 0);
+        }
+
+        private void PanelPaint(object sender, PaintEventArgs e)
+        {
+            Rectangle r = searchBox.Bounds;
+            r.Inflate(3, 3);
+            Pen p = new Pen(Color.LightGray);
+            e.Graphics.DrawRectangle(p, r);
+
         }
 
         private void OnTextChanged(object sender, EventArgs e)
@@ -225,7 +237,11 @@ namespace Image_Galery_Demo
                     ConvertToPdf(images, imageToPdf);
                     Console.WriteLine(saveFile.FileName);
                     imageToPdf.Save(saveFile.FileName);
-                    MessageBox.Show(saveFile.FileName + " " + Properties.Resources.saved_successfully, Properties.Resources.dialog_success);
+                    DialogResult dialogResult = MessageBox.Show(saveFile.FileName + " " + Properties.Resources.saved_successfully, Properties.Resources.dialog_success, MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        System.Diagnostics.Process.Start(saveFile.FileName);
+                    }
                 }
                 catch (Exception e1)
                 {

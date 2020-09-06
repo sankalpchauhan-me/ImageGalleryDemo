@@ -12,53 +12,59 @@ namespace Image_Galery_Demo
     class AppView
     {
 
-        public static SplitContainer getSplitContainer()
+        public static SplitContainer GetSplitContainer()
         {
-            SplitContainer mainSplitContainer = new SplitContainer();
-            mainSplitContainer.Dock = DockStyle.Fill;
-            mainSplitContainer.IsSplitterFixed = true;
-            mainSplitContainer.Location = new Point(0, 0);
-            mainSplitContainer.Margin = new Padding(2);
-            mainSplitContainer.Name = "mainSplitContainer";
-            mainSplitContainer.Orientation = Orientation.Horizontal;
-            mainSplitContainer.Size = new Size(784, 661);
-            mainSplitContainer.SplitterDistance = 84;
-            mainSplitContainer.TabIndex = 0;
+            SplitContainer mainSplitContainer = new SplitContainer
+            {
+                Dock = DockStyle.Fill,
+                IsSplitterFixed = true,
+                Location = new Point(0, 0),
+                Margin = new Padding(2),
+                Name = "mainSplitContainer",
+                Orientation = Orientation.Horizontal,
+                Size = new Size(784, 661),
+                SplitterDistance = 84,
+                TabIndex = 0
+            };
             return mainSplitContainer;
         }
 
-        public static TextBox getSearchBox()
+        public static TextBox GetSearchBox()
         {
-            TextBox searchBox = new TextBox();
-            searchBox.Anchor = (((AnchorStyles.Top | AnchorStyles.Bottom)
+            TextBox searchBox = new TextBox
+            {
+                Anchor = (((AnchorStyles.Top | AnchorStyles.Bottom)
            | AnchorStyles.Left)
-           | AnchorStyles.Right);
-            searchBox.BorderStyle = BorderStyle.None;
-            searchBox.Cursor = Cursors.IBeam;
-            searchBox.Location = new Point(44, 9);
-            searchBox.Name = "searchBox";
-            searchBox.Size = new Size(235, 13);
-            searchBox.TabIndex = 0;
-            searchBox.Text = Properties.Resources.search_image;
+           | AnchorStyles.Right),
+                BorderStyle = BorderStyle.None,
+                Cursor = Cursors.IBeam,
+                Location = new Point(44, 9),
+                Name = "searchBox",
+                Size = new Size(235, 13),
+                TabIndex = 0,
+                Text = Properties.Resources.search_image
+            };
             return searchBox;
         }
 
-        public static PictureBox getSearchImagePictureBox()
+        public static PictureBox GetSearchImagePictureBox()
         {
-            PictureBox searchImagePictureBox = new PictureBox();
-            searchImagePictureBox.Image = Properties.Resources.downloadsearch;
-            searchImagePictureBox.Location = new Point(493, 3);
-            searchImagePictureBox.Name = "searchImagePictureBox";
-            searchImagePictureBox.Size = new Size(24, 24);
-            searchImagePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            searchImagePictureBox.TabIndex = 3;
-            searchImagePictureBox.TabStop = false;
+            PictureBox searchImagePictureBox = new PictureBox
+            {
+                Image = Properties.Resources.downloadsearch,
+                Location = new Point(493, 3),
+                Name = "searchImagePictureBox",
+                Size = new Size(24, 24),
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                TabIndex = 3,
+                TabStop = false
+            };
 
             return searchImagePictureBox;
 
         }
 
-        public static TableLayoutPanel getTableLayoutPanel()
+        public static TableLayoutPanel GetTableLayoutPanel()
         {
             TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
             tableLayoutPanel.ColumnCount = 3;
@@ -76,99 +82,126 @@ namespace Image_Galery_Demo
             return tableLayoutPanel;
         }
 
-        public static PictureBox getExportPDFButton()
+        public static PictureBox GetExportPDFButton()
         {
-            PictureBox exportImage = new PictureBox();
-            exportImage.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
-            exportImage.Image = Properties.Resources.ExportToPDF;
-            exportImage.Location = new Point(20, 46);
-            exportImage.Margin = new Padding(20, 3, 3, 10);
-            exportImage.Name = "exportImage";
-            exportImage.Size = new Size(135, 28);
-            exportImage.SizeMode = PictureBoxSizeMode.StretchImage;
-            exportImage.TabIndex = 2;
-            exportImage.TabStop = false;
-            exportImage.Visible = false;
+            PictureBox exportImage = new PictureBox
+            {
+                Anchor = (AnchorStyles.Bottom | AnchorStyles.Left),
+                Image = Properties.Resources.ExportToPDF,
+                Location = new Point(20, 46),
+                Margin = new Padding(20, 3, 3, 10),
+                Name = "exportImage",
+                Size = new Size(135, 28),
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                TabIndex = 2,
+                TabStop = false,
+                Visible = false
+            };
 
             return exportImage;
         }
 
-        public static Label getStausLabel()
+        public static Label GetStausLabel()
         {
-            Label statusLabel = new Label();
-            statusLabel.Cursor = Cursors.Default;
-            statusLabel.Dock = DockStyle.Fill;
-            statusLabel.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            statusLabel.ForeColor = SystemColors.ControlDarkDark;
-            statusLabel.Location = new Point(0, 2);
-            statusLabel.Name = "statusLabel";
-            statusLabel.Size = new Size(784, 549);
-            statusLabel.TabIndex = 4;
-            statusLabel.Text = Properties.Resources.initial_status_label;
-            statusLabel.TextAlign = ContentAlignment.MiddleCenter;
+            Label statusLabel = new Label
+            {
+                Cursor = Cursors.Default,
+                Dock = DockStyle.Fill,
+                Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Point, 0),
+                ForeColor = SystemColors.ControlDarkDark,
+                Location = new Point(0, 2),
+                Name = "statusLabel",
+                Size = new Size(784, 549),
+                TabIndex = 4,
+                Text = Properties.Resources.initial_status_label,
+                TextAlign = ContentAlignment.MiddleCenter
+            };
             return statusLabel;
         }
 
-        public static Label getBorder()
+        public static Label GetBorder()
         {
-            Label label1 = new Label();
-            label1.BorderStyle = BorderStyle.Fixed3D;
-            label1.Dock = DockStyle.Top;
-            label1.Location = new Point(0, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(784, 2);
-            label1.TabIndex = 3;
+            Label label1 = new Label
+            {
+                BorderStyle = BorderStyle.Fixed3D,
+                Dock = DockStyle.Top,
+                Location = new Point(0, 0),
+                Name = "label1",
+                Size = new Size(784, 2),
+                TabIndex = 3
+            };
             return label1;
         }
 
-        public static Group getGroup()
+        public static Group GetGroup()
         {
-            Group group1 = new Group();
-            group1.Name = "group1";
-            group1.Visible = false;
+            Group group1 = new Group
+            {
+                Name = "group1",
+                Visible = false
+            };
             return group1;
         }
 
-        public static C1TileControl getTileCntrol()
+        public static C1TileControl GetTileCntrol()
         {
-            C1TileControl imageTileControl = new C1TileControl();
-            imageTileControl.AllowChecking = true;
-            imageTileControl.AllowRearranging = true;
-            imageTileControl.CellHeight = 78;
-            imageTileControl.CellSpacing = 11;
-            imageTileControl.CellWidth = 78;
-            imageTileControl.Dock = DockStyle.Fill;
-            imageTileControl.Location = new Point(0, 0);
-            imageTileControl.Name = "imageTileControl";
-            imageTileControl.Orientation = LayoutOrientation.Vertical;
-            imageTileControl.Padding = new Padding(0);
-            imageTileControl.Size = new Size(784, 573);
-            imageTileControl.SurfacePadding = new Padding(12, 4, 12, 4);
-            imageTileControl.SwipeDistance = 20;
-            imageTileControl.SwipeRearrangeDistance = 98;
-            imageTileControl.TabIndex = 1;
-            imageTileControl.TextSize = 0F;
+            C1TileControl imageTileControl = new C1TileControl
+            {
+                AllowChecking = true,
+                AllowRearranging = true,
+                CellHeight = 78,
+                CellSpacing = 11,
+                CellWidth = 78,
+                Dock = DockStyle.Fill,
+                Location = new Point(0, 0),
+                Name = "imageTileControl",
+                Orientation = LayoutOrientation.Vertical,
+                Padding = new Padding(0),
+                Size = new Size(784, 573),
+                SurfacePadding = new Padding(12, 4, 12, 4),
+                SwipeDistance = 20,
+                SwipeRearrangeDistance = 98,
+                TabIndex = 1,
+                TextSize = 0F
+            };
             return imageTileControl;
         }
 
-        public static ToolStripProgressBar getProgressBarTool()
+        public static ToolStripProgressBar GetProgressBarTool()
         {
-            ToolStripProgressBar toolStripProgressBar1 = new ToolStripProgressBar();
-            toolStripProgressBar1.Name = "toolStripProgressBar1";
-            toolStripProgressBar1.Size = new Size(100, 16);
-            toolStripProgressBar1.Style = ProgressBarStyle.Marquee;
+            ToolStripProgressBar toolStripProgressBar1 = new ToolStripProgressBar
+            {
+                Name = "toolStripProgressBar1",
+                Size = new Size(100, 16),
+                Style = ProgressBarStyle.Marquee
+            };
             return toolStripProgressBar1;
         }
 
-        public static StatusStrip getStatusStrip()
+        public static Panel GetPanel()
         {
-            StatusStrip statusStrip = new StatusStrip();
-            statusStrip.Location = new Point(0, 551);
-            statusStrip.Name = "statusStrip";
-            statusStrip.Size = new Size(784, 22);
-            statusStrip.TabIndex = 2;
-            statusStrip.Text = "statusStrip1";
-            statusStrip.Visible = false;
+            Panel panel1 = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Location = new Point(199, 3),
+                Name = "panel1",
+                Size = new Size(288, 78),
+                TabIndex = 0
+            };
+            return panel1;
+        }
+
+        public static StatusStrip GetStatusStrip()
+        {
+            StatusStrip statusStrip = new StatusStrip
+            {
+                Location = new Point(0, 551),
+                Name = "statusStrip",
+                Size = new Size(784, 22),
+                TabIndex = 2,
+                Text = "statusStrip1",
+                Visible = false
+            };
             return statusStrip;
         }
     }

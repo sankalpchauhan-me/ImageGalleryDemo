@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.panel1 = new System.Windows.Forms.Panel();
             //this.tile1 = new C1.Win.C1Tile.Tile();
             //this.tile2 = new C1.Win.C1Tile.Tile();
             //this.tile3 = new C1.Win.C1Tile.Tile();
@@ -38,19 +37,6 @@
             //this.mainSplitContainer.SuspendLayout();
             //this.statusStrip.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(199, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(288, 78);
-            this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            
-            // 
-            // group1
-            // 
            
             /**
             // 
@@ -99,7 +85,6 @@
         #endregion
 
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Panel panel1;
         //private C1.Win.C1Tile.Tile tile1;
         //private C1.Win.C1Tile.Tile tile2;
         //private C1.Win.C1Tile.Tile tile3;

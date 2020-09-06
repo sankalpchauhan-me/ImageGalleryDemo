@@ -154,7 +154,7 @@ Meanwhile Enjoy some sample images</value>
     <value>Meanwhile look at these sample images</value>
   </data>
   <data name="saved_successfully" xml:space="preserve">
-    <value>Saved Successfully</value>
+    <value>Saved Successfully. Would you like to open the document?</value>
   </data>
   <data name="search_image" xml:space="preserve">
     <value>Search Image</value>
