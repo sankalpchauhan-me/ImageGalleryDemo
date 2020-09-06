@@ -121,6 +121,14 @@ namespace Image_Galery_Demo
             return label1;
         }
 
+        public static Group getGroup()
+        {
+            Group group1 = new Group();
+            group1.Name = "group1";
+            group1.Visible = false;
+            return group1;
+        }
+
         public static C1TileControl getTileCntrol()
         {
             C1TileControl imageTileControl = new C1TileControl();

@@ -41,7 +41,7 @@ namespace Image_Galery_Demo
         List<ImageItem> imagesList;
         int checkedItems = 0;
 
-        [DllImport("wininet.dll")]
+        [DllImport(Constants.NET_DRIVER)]
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
 
         /// <summary>
@@ -54,6 +54,7 @@ namespace Image_Galery_Demo
             this.KeyUp += ImageGalleryEnterPressed;
         }
 
+        // Initializes the UI from the base components in AppView class
         public void InitUi()
         {
             //Split Container
@@ -90,9 +91,7 @@ namespace Image_Galery_Demo
             mainSplitContainer.Panel2.Controls.Add(statusLabel);
 
             //Groups
-            group1 = new Group();
-            group1.Name = "group1";
-            group1.Visible = false;
+            group1 = AppView.getGroup();
 
             //init C1Tile
             imageTileControl = AppView.getTileCntrol();
@@ -109,8 +108,6 @@ namespace Image_Galery_Demo
             statusStrip.Items.AddRange(new ToolStripItem[] {
             toolStripProgressBar1});
             mainSplitContainer.Panel2.Controls.Add(statusStrip);
-
-
         }
 
         // Perform Search if Enter Key is pressed
@@ -129,15 +126,6 @@ namespace Image_Galery_Demo
         {
             int Desc;
             return InternetGetConnectedState(out Desc, 0);
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-            Rectangle r = searchBox.Bounds;
-            r.Inflate(3, 3);
-            Pen p = new Pen(Color.LightGray);
-            e.Graphics.DrawRectangle(p, r);
-
         }
 
         private void OnTextChanged(object sender, EventArgs e)

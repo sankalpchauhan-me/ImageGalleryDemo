@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppView.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="DataFetcher.cs" />
     <Compile Include="ImageGallery.cs">
       <SubType>Form</SubType>
